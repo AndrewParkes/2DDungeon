@@ -8,6 +8,10 @@ public class PlayerAttack : MonoBehaviour
     private PlayerWeapon weapon;
 
     void Update() {
+        CheckForAttack();
+    }
+
+    private void CheckForAttack() {
         if(Input.GetButtonDown("Fire1")) {
              //Abs as players direction changes and we cant attack backwards
             float directionX = Mathf.Abs(Input.GetAxisRaw("Horizontal"));
