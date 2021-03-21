@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float jumpForce = 7f;
 
+    Health health;
+
     private Rigidbody2D rb;
     public Animator animator;
 
@@ -23,6 +25,8 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        health = GetComponent<Health>();
+        health.SetHealth(100);
     }
 
     // Update is called once per frame
@@ -30,6 +34,29 @@ public class Enemy : MonoBehaviour
     {
         /*animator.SetFloat("XMovement", Mathf.Abs(movementDirection));
         animator.SetFloat("YMovement", rb.velocity.y);*/
+    }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if(collider.tag == "Projectile")
+        {
+            Projectile projectile = collider.transform.GetComponent<Projectile>();
+            if (projectile != null)
+            {
+                Damage(projectile.GetDamage());
+            }
+        }
+    }
+
+    void Damage(float damage) {
+        health.DealDamage(damage);
+        CheckDead();
+    }
+
+    void CheckDead() {
+        if(health.GetHealth() < 0) {
+            Destroy(gameObject);
+        }
     }
 
     public float GetAttackDamage() {
