@@ -6,7 +6,7 @@ Goal:
 
 
 Enemy Jumper (Random movement with jump ever 5 seconds)
-![Strat of game with character Controls](https://i.imgur.com/HM4sPQS.gifv)
+![Strat of game with character Controls](https://i.imgur.com/HM4sPQS.gif)
 2021/03/21
 ![Strat of game with character Controls](https://i.imgur.com/fbIVt7P.png)
 
