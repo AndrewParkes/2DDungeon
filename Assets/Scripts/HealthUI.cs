@@ -43,7 +43,7 @@ public class HealthUI : MonoBehaviour
             GameObject healthObject = (GameObject)Instantiate(healthType, new Vector3(0, 0, 0), Quaternion.identity);
             RectTransform rect = healthObject.transform.GetChild(0).GetComponent<RectTransform>();
             rect.transform.position = new Vector3(rect.transform.position.x + spriteSpacing * i, rect.transform.position.y, rect.transform.position.z);
-            healthObject.transform.parent = transform;
+            healthObject.transform.SetParent(transform);
             
             livesImages.Add(healthObject);
         }
