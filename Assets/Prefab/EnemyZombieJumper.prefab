@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5736111428510386815}
   m_Layer: 0
   m_Name: EnemyZombieJumper
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,8 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aafa56c0ff47b81459f5a91073022648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contactDamage: 1
-  attackDamage: 1
+  contactDamage: 20
+  attackDamage: 0
   movementSpeed: 4
   movementDirection: 0
   jumpForce: 7

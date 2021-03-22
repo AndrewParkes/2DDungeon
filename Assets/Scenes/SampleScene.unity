@@ -232,6 +232,54 @@ Transform:
   m_Father: {fileID: 2058988472}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &34647106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 34647108}
+  - component: {fileID: 34647107}
+  m_Layer: 0
+  m_Name: HealthUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &34647107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34647106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7d467abaa5e95b40891fde109862326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthEmpty: {fileID: 9015556438852931602, guid: 63526d209b8472146b26b0988a2e00f7, type: 3}
+  healthHalf: {fileID: 3914976671438587076, guid: b6b6c3700e105e647aae10c0f0bdba66, type: 3}
+  healthFull: {fileID: 1463763706683193014, guid: d8e946c4dacc4d64da7d78f5e2f966b2, type: 3}
+  spriteSpacing: 100
+  player: {fileID: 1312346608}
+--- !u!4 &34647108
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34647106}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.88, y: 4.16, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &36389915
 GameObject:
   m_ObjectHideFlags: 0
@@ -2070,7 +2118,7 @@ GameObject:
   - component: {fileID: 932695806}
   - component: {fileID: 932695807}
   - component: {fileID: 932695808}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: weapon_regular_sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2743,6 +2791,31 @@ MonoBehaviour:
     m_Extent: {x: 0, y: 0, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
+--- !u!114 &1312346611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312346608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2bce5d0e0c65fc488823455d46bdd6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1312346612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312346608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f921408acbc06e4ab2b7660ba394047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthUI: {fileID: 34647107}
 --- !u!70 &1312346613
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -4034,7 +4107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1985237632}
   - component: {fileID: 1985237633}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4069,6 +4142,72 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childWeapons: []
+--- !u!1 &1985439790
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1985439793}
+  - component: {fileID: 1985439792}
+  - component: {fileID: 1985439791}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1985439791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985439790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &1985439792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985439790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1985439793
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985439790}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2058988471
 GameObject:
   m_ObjectHideFlags: 0
@@ -4407,6 +4546,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyZombieJumper
       objectReference: {fileID: 0}
+    - target: {fileID: 5736111428510386810, guid: 7650c761a9f18e344afda1557123a8eb, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5736111428510386812, guid: 7650c761a9f18e344afda1557123a8eb, type: 3}
+      propertyPath: attackDamage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5736111428510386812, guid: 7650c761a9f18e344afda1557123a8eb, type: 3}
+      propertyPath: contactDamage
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 5736111428510386814, guid: 7650c761a9f18e344afda1557123a8eb, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -4475,6 +4626,10 @@ PrefabInstance:
     - target: {fileID: 6309699325525895738, guid: 818b0949c4f77d54cb24203a463f98db, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309699325525895738, guid: 818b0949c4f77d54cb24203a463f98db, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6309699325525895742, guid: 818b0949c4f77d54cb24203a463f98db, type: 3}
       propertyPath: m_Constraints
