@@ -12,6 +12,9 @@ public class Character2DController : MonoBehaviour
 
     private Rigidbody2D rb;
     public Animator animator;
+    bool canMove = true;
+
+    float blockInputTime = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -26,18 +29,32 @@ public class Character2DController : MonoBehaviour
     }
 
     void Move() {
-        var movement = Input.GetAxis("Horizontal");
-        transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MovementSpeed;
+        if(canMove) {
+            var movement = Input.GetAxis("Horizontal"); //left and right controll
+            transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MovementSpeed;
 
-        animator.SetFloat("XMovement", Mathf.Abs(movement));
+            if(!Mathf.Approximately(0, movement)) { // Flip direction
+                transform.rotation = movement < 0 ? Quaternion.Euler(0, 180, 0) : Quaternion.identity;
+            }
+
+            if(Input.GetButtonDown("Jump") && Mathf.Abs(rb.velocity.y) < 0.001f) { // jump controll
+                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            }
+            animator.SetFloat("XMovement", Mathf.Abs(movement));
+        }
         animator.SetFloat("YMovement", rb.velocity.y);
+    }
 
-        if(!Mathf.Approximately(0, movement)) {
-            transform.rotation = movement < 0 ? Quaternion.Euler(0, 180, 0) : Quaternion.identity;
-        }
+    public void BlockMoveMentForKnockBack(float force) {
+        blockInputTime = force/10;
+        StartCoroutine(BlockInputCoroutine());
+    }
 
-        if(Input.GetButtonDown("Jump") && Mathf.Abs(rb.velocity.y) < 0.001f) {
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-        }
+    IEnumerator BlockInputCoroutine() {
+        canMove = false;
+        animator.SetBool("Hit", true);
+        yield return new WaitForSeconds(blockInputTime);
+        animator.SetBool("Hit", false);
+        canMove = true;
     }
 }

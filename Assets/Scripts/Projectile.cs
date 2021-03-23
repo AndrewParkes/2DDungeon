@@ -6,6 +6,9 @@ public class Projectile : MonoBehaviour
 {
     float damage = 10f;
 
+    [SerializeField]
+    public float knockBackForce { get; } = 3f;
+
     public float GetDamage() {
         return damage;
     }

@@ -15,11 +15,16 @@ public class Enemy : MonoBehaviour
     private float movementDirection = 0f;
     [SerializeField]
     private float jumpForce = 7f;
+    [SerializeField]
+    private float knockBackForce = 3f;
+    [SerializeField]
+    GameObject player;
 
     Health health;
 
     private Rigidbody2D rb;
     public Animator animator;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +49,7 @@ public class Enemy : MonoBehaviour
             if (projectile != null)
             {
                 Damage(projectile.GetDamage());
+                KnockBack(rb.transform.position - player.transform.position, projectile.knockBackForce);
             }
         }
     }
@@ -57,6 +63,12 @@ public class Enemy : MonoBehaviour
         if(health.GetHealth() < 0) {
             Destroy(gameObject);
         }
+    }
+
+    void KnockBack(Vector3 knockBackDirection, float force) {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = 0f; 
+        rb.AddForce( knockBackDirection.normalized * force, ForceMode2D.Impulse);
     }
 
     public float GetAttackDamage() {
@@ -85,5 +97,9 @@ public class Enemy : MonoBehaviour
 
     public Rigidbody2D GetRigidBody() {
         return rb;
+    }
+
+    public float GetKnockBackForce() {
+        return knockBackForce;
     }
 }

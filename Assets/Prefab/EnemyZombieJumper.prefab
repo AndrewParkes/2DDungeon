@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 5736111428510386814}
   - component: {fileID: 5736111428510386812}
   - component: {fileID: 5736111428510386815}
-  m_Layer: 0
+  - component: {fileID: 1451290664}
+  m_Layer: 8
   m_Name: EnemyZombieJumper
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -117,7 +118,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.11}
@@ -140,6 +141,8 @@ MonoBehaviour:
   movementSpeed: 4
   movementDirection: 0
   jumpForce: 7
+  knockBackForce: 3
+  player: {fileID: 6309699325525895738, guid: 818b0949c4f77d54cb24203a463f98db, type: 3}
   animator: {fileID: 0}
 --- !u!114 &5736111428510386815
 MonoBehaviour:
@@ -154,3 +157,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpTiming: 5
+--- !u!114 &1451290664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5736111428510386810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a540d24811f80204a8c5b4b36ecf9d6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 120
