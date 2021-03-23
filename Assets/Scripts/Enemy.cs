@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float movementSpeed = 4f;
     [SerializeField]
-    private float movementDirection = 0f;
+    private float movementDirection = 1f;
     [SerializeField]
     private float jumpForce = 7f;
     [SerializeField]
@@ -101,5 +101,9 @@ public class Enemy : MonoBehaviour
 
     public float GetKnockBackForce() {
         return knockBackForce;
+    }
+
+    public void ReverseMovementDirection() {
+        movementDirection *= -1;
     }
 }
