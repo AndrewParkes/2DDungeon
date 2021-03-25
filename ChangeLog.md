@@ -1,5 +1,7 @@
 # 2DDungeon Change Log:
 
+2021/03/25 - Adding tiles to reSkin the game and sharpening character models. Moved over to rigid body movement over transform movement
+![GIF](https://i.imgur.com/HWMv3VZ.gif)
 2021/03/23 - Second enemy type. Walks back and forth between obstacles
 ![GIF](https://i.imgur.com/g8EyzVQ.gif)
 2021/03/23 - Player Knockback.

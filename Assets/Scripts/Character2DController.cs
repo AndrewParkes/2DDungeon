@@ -31,7 +31,7 @@ public class Character2DController : MonoBehaviour
     void Move() {
         if(canMove) {
             var movement = Input.GetAxis("Horizontal"); //left and right controll
-            transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MovementSpeed;
+            rb.velocity = new Vector2 (movement * MovementSpeed, rb.velocity.y);
 
             if(!Mathf.Approximately(0, movement)) { // Flip direction
                 transform.rotation = movement < 0 ? Quaternion.Euler(0, 180, 0) : Quaternion.identity;

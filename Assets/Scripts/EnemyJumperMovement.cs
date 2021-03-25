@@ -46,7 +46,7 @@ public class EnemyJumperMovement : MonoBehaviour
 
     void Move() {
         if(Mathf.Abs(enemy.GetRigidBody().velocity.y) > 0.001f) {
-            transform.position += new Vector3(enemy.GetMovementDirection(), 0, 0) * Time.deltaTime * enemy.GetMovementSpeed();
+            enemy.GetRigidBody().velocity = new Vector2 (enemy.GetMovementDirection() * enemy.GetMovementSpeed(), enemy.GetRigidBody().velocity.y);
         }
     }
 }

@@ -21,7 +21,6 @@ public class HealthUI : MonoBehaviour
 
     private List<GameObject> livesImages = new List<GameObject>();
 
-    // Start is called before the first frame update
     void Start()
     {
 
