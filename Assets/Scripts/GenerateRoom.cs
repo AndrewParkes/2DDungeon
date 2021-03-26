@@ -20,7 +20,9 @@ public class GenerateRoom : MonoBehaviour
     [SerializeField]
     int cellColumns;
     [SerializeField]
-    int cellSize;
+    int cellWidth;
+    [SerializeField]
+    int cellHeight;
 
     int levelHeight;
     int levelWidth;
@@ -32,19 +34,19 @@ public class GenerateRoom : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        levelHeight = cellRows * cellSize + 1;
-        levelWidth = cellColumns * cellSize + 1;
+        levelHeight = cellRows * cellHeight + 1;
+        levelWidth = cellColumns * cellWidth + 1;
         ground = GameObject.Find("Ground").GetComponent<Tilemap>();
         background = GameObject.Find("Background").GetComponent<Tilemap>();
-        StartCoroutine(BuildLevel());
+        BuildLevel();
     }
 
-    IEnumerator BuildLevel() {
+    void BuildLevel() {
         //build standard grid
         for(int row = 0; row < levelHeight; row++) {
             //int columnProbability = Random.Range(20, 40);
             for(int column = 0; column < levelWidth; column++) {
-                if(row == 0 || row == levelHeight -1 || column == 0 || column == levelWidth -1 || row % cellSize == 0 || column % cellSize == 0) {
+                if(row == 0 || row == levelHeight -1 || column == 0 || column == levelWidth -1 || row % cellHeight == 0 || column % cellWidth == 0) {
                     ground.SetTile(new Vector3Int(column, row, 0), groundTiles[0]);
                     continue;
                 }
@@ -77,46 +79,46 @@ public class GenerateRoom : MonoBehaviour
 
             int pathLength = Random.Range((cellRows + cellColumns) / 4 * 3, (cellRows + cellColumns));
 
-            int halfCell = (int)Mathf.Ceil(cellSize / 2f);
-            int currentX = ((int)Mathf.Ceil(cellColumns / 2f) * cellSize) - halfCell;
-            int currentY = ((int)Mathf.Ceil(cellRows / 2f) * cellSize) - halfCell;
+            int halfCellWidth = (int)Mathf.Ceil(cellWidth / 2f);
+            int halfCellHeight = (int)Mathf.Ceil(cellHeight / 2f);
+            int currentX = ((int)Mathf.Ceil(cellColumns / 2f) * cellWidth) - halfCellWidth;
+            int currentY = ((int)Mathf.Ceil(cellRows / 2f) * cellHeight) - halfCellHeight;
 
             
             ground.SetTile(new Vector3Int(currentX, currentY, 0), groundTiles[0]);
             FillRoom(currentX, currentY);
 
             for(int pathCount = 0; pathCount < pathLength; pathCount++) {
-                yield return new WaitForSeconds(1);
                 int direction = Random.Range(0, 6);
                 if(direction == 0 || ((direction == 4 || direction == 5) && path == 0)) { //up
-                    if(currentY + halfCell != levelHeight -1) {// on boundry
-                        ground.SetTile(new Vector3Int(currentX, currentY + halfCell, 0), null);
-                        background.SetTile(new Vector3Int(currentX, currentY + halfCell, 0), backgroundTiles[0]);
-                        currentY = currentY + cellSize;
+                    if(currentY + halfCellHeight != levelHeight -1) {// on boundry
+                        ground.SetTile(new Vector3Int(currentX, currentY + halfCellHeight, 0), null);
+                        background.SetTile(new Vector3Int(currentX, currentY + halfCellHeight, 0), backgroundTiles[0]);
+                        currentY = currentY + cellHeight;
                         FillRoom(currentX, currentY);
                     }
                 }
                 else if(direction == 1 || ((direction == 4 || direction == 5) && path == 1)) {// down
-                    if(currentY - halfCell != 0) {// on boundry
-                        ground.SetTile(new Vector3Int(currentX, currentY - halfCell, 0), null);
-                        background.SetTile(new Vector3Int(currentX, currentY - halfCell, 0), backgroundTiles[0]);
-                        currentY = currentY - cellSize;
+                    if(currentY - halfCellHeight != 0) {// on boundry
+                        ground.SetTile(new Vector3Int(currentX, currentY - halfCellHeight, 0), null);
+                        background.SetTile(new Vector3Int(currentX, currentY - halfCellHeight, 0), backgroundTiles[0]);
+                        currentY = currentY - cellHeight;
                         FillRoom(currentX, currentY);
                     }
                 }
                 else if(direction == 2 || ((direction == 4 || direction == 5) && path == 2)) {// left
-                    if(currentX - halfCell != 0) {// on boundry
-                        ground.SetTile(new Vector3Int(currentX - halfCell, currentY, 0), null);
-                        background.SetTile(new Vector3Int(currentX - halfCell, currentY, 0), backgroundTiles[0]);
-                        currentX = currentX - cellSize;
+                    if(currentX - halfCellWidth != 0) {// on boundry
+                        ground.SetTile(new Vector3Int(currentX - halfCellWidth, currentY, 0), null);
+                        background.SetTile(new Vector3Int(currentX - halfCellWidth, currentY, 0), backgroundTiles[0]);
+                        currentX = currentX - cellWidth;
                         FillRoom(currentX, currentY);
                     }
                 }
                 else if(direction == 3 || ((direction == 4 || direction == 5) && path == 3)) {// right
-                    if(currentX + halfCell != levelWidth -1) {// on boundry
-                        ground.SetTile(new Vector3Int(currentX + halfCell, currentY, 0), null);
-                        background.SetTile(new Vector3Int(currentX + halfCell, currentY, 0), backgroundTiles[0]);
-                        currentX = currentX + cellSize;
+                    if(currentX + halfCellWidth != levelWidth -1) {// on boundry
+                        ground.SetTile(new Vector3Int(currentX + halfCellWidth, currentY, 0), null);
+                        background.SetTile(new Vector3Int(currentX + halfCellWidth, currentY, 0), backgroundTiles[0]);
+                        currentX = currentX + cellWidth;
                         FillRoom(currentX, currentY);
                     }
                 }
@@ -125,8 +127,8 @@ public class GenerateRoom : MonoBehaviour
     }
 
     bool GridCorner(int row, int column) {
-        int rowMod = row % 5;
-        int columnMod = column % 5;
+        int rowMod = row % cellWidth;
+        int columnMod = column % cellHeight;
 
         if(rowMod == 0 && (columnMod == 0 || columnMod == 1 || columnMod == 4 || columnMod == 5)) {
             return true;
@@ -150,11 +152,11 @@ public class GenerateRoom : MonoBehaviour
     }
 
     void FillRoom(int currentX, int currentY) {
-        int startX = currentX - (int)Mathf.Floor(cellSize / 2f) + 1;
-        int startY = currentY - (int)Mathf.Floor(cellSize / 2f) + 1;
+        int startX = currentX - (int)Mathf.Floor(cellWidth / 2f) + 1;
+        int startY = currentY - (int)Mathf.Floor(cellHeight / 2f) + 1;
 
-        for(int row = 0; row <= cellSize - 2; row++) {
-            for(int column = 0; column <= cellSize - 2; column++) {
+        for(int row = 0; row <= cellHeight - 2; row++) {
+            for(int column = 0; column <= cellWidth - 2; column++) {
                 background.SetTile(new Vector3Int(startX + column, startY + row, 0), backgroundTiles[0]);
             }
         }

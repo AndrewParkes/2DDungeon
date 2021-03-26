@@ -765,16 +765,24 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 607248667409867663, guid: 57aca94f8b2c4c94597f6a9cbc2657e7, type: 3}
+      propertyPath: cellWidth
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 607248667409867663, guid: 57aca94f8b2c4c94597f6a9cbc2657e7, type: 3}
       propertyPath: worldGrid
       value: 
       objectReference: {fileID: 1211663144}
+    - target: {fileID: 607248667409867663, guid: 57aca94f8b2c4c94597f6a9cbc2657e7, type: 3}
+      propertyPath: cellHeight
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 607248667409867663, guid: 57aca94f8b2c4c94597f6a9cbc2657e7, type: 3}
       propertyPath: levelWidth
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 607248667409867663, guid: 57aca94f8b2c4c94597f6a9cbc2657e7, type: 3}
       propertyPath: cellColumns
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 607248667409867663, guid: 57aca94f8b2c4c94597f6a9cbc2657e7, type: 3}
       propertyPath: levelHeight
