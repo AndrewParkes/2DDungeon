@@ -7,7 +7,7 @@
 2021/03/23 - Player Knockback.
 ![GIF](https://i.imgur.com/YOhY1Zz.gif)
 2021/03/23 - EnemyKnockback.
-![GIF](https://i.imgur.com/w8Xa20u.gifv)
+![GIF](https://i.imgur.com/w8Xa20u.gif)
 2021/03/22 - Player Health and enemy contact damage.
 ![GIF](https://i.imgur.com/LpeEx9G.gif)
 2021/03/21 - Player attacking (Skull is placeholder for slash sprite). killing enemy destroys object
