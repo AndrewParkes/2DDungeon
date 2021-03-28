@@ -9,6 +9,8 @@ public class GenerateRoom : MonoBehaviour
     [SerializeField]
     TileBase[] groundTiles;
     [SerializeField]
+    TileBase[] platformTiles;
+    [SerializeField]
     TileBase[] backgroundTiles;
     
 
@@ -152,12 +154,34 @@ public class GenerateRoom : MonoBehaviour
     }
 
     void FillRoom(int currentX, int currentY) {
+        if(background.GetTile(new Vector3Int(currentX, currentY, 0)) != null) {
+            return;
+        }
         int startX = currentX - (int)Mathf.Floor(cellWidth / 2f) + 1;
         int startY = currentY - (int)Mathf.Floor(cellHeight / 2f) + 1;
+        FillBackground(startX, startY);
+        FillPlatforms(startX, startY);
+    }
 
+    void FillBackground(int startX, int startY) {
         for(int row = 0; row <= cellHeight - 2; row++) {
             for(int column = 0; column <= cellWidth - 2; column++) {
-                background.SetTile(new Vector3Int(startX + column, startY + row, 0), backgroundTiles[0]);
+                int x = startX + column;
+                int y = startY + row;
+                background.SetTile(new Vector3Int(x, y, 0), backgroundTiles[0]);
+            }
+        }
+    }
+
+    void FillPlatforms(int startX, int startY) {
+        for(int row = 0; row <= cellHeight - 2; row++) {
+            for(int column = 0; column <= cellWidth - 2; column++) {
+                int spawnChance = Random.Range(0, 100);
+                if(spawnChance >= 80) {
+                    if(ground.GetTile(new Vector3Int(startX + column, startY + row + 1 , 0)) == null && ground.GetTile(new Vector3Int(startX + column, startY + row - 1 , 0)) == null) {
+                        ground.SetTile(new Vector3Int(startX + column, startY + row, 0), platformTiles[0]);
+                    }
+                }
             }
         }
     }
