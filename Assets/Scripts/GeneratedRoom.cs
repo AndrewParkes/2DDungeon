@@ -25,9 +25,10 @@ public class GeneratedRoom : MonoBehaviour
 
     public LevelGenerator LevelGenerator { get; set; }
 
+    PolygonCollider2D polyCollider;
+
     void Start()
     {
-        
     }
 
     public void Generate() {
@@ -47,6 +48,7 @@ public class GeneratedRoom : MonoBehaviour
                 }
             }
             UpdateTiles();
+            UpdatePolygonCollider2D();
         }
     }
 
@@ -68,10 +70,7 @@ public class GeneratedRoom : MonoBehaviour
     TileBase getTileFromFolder(int x, int y, string type) {
         
         string covering = GetCovering(x, y);
-        Debug.Log(x + " " + y + " " + covering);
-        Debug.Log("Tiles/" + type + "/" + covering);
         Object[] tileBases = Resources.LoadAll("Tiles/" + type + "/" + covering, typeof(TileBase));
-        Debug.Log(tileBases.Length);
         if(tileBases.Length == 0) {
             return (TileBase)Resources.LoadAll("Tiles/Unknown", typeof(TileBase))[0];
         }
@@ -80,7 +79,6 @@ public class GeneratedRoom : MonoBehaviour
 
     string GetCovering(int x, int y) {
         string covering = "";
-        Debug.Log(x + " " + y + " " + roomWidth + " " + roomHeight);
         if(y + 1 < roomHeight -1 && roomLayout[x, y + 1] == 0) {
             covering = covering + "T";
         }
@@ -126,5 +124,20 @@ public class GeneratedRoom : MonoBehaviour
 
     bool Center(int column, int row) {
         return (column == Mathf.Ceil(roomWidth / 2) && row == Mathf.Ceil(roomHeight / 2));
+    }
+
+    void UpdatePolygonCollider2D() {
+        //Only does a single room. Does not merge multiple rooms
+        polyCollider = GetComponent<PolygonCollider2D>();
+
+        float positionX = 0.5f;
+        float positionY = 0.5f;
+
+        Vector2 point1 = new Vector2(positionX, positionY);
+        Vector2 point2 = new Vector2(positionX, positionY + roomHeight);
+        Vector2 point3 = new Vector2(positionX + roomWidth, positionY + roomHeight);
+        Vector2 point4 = new Vector2(positionX + roomWidth, positionY);
+
+        polyCollider.points = new[]{point1,point2,point3,point4};
     }
 }
