@@ -47,12 +47,13 @@ public class GeneratedRoom : MonoBehaviour
                     }
                 }
             }
-            UpdateTiles();
+            //UpdateTiles();
+            StartCoroutine(UpdateTiles());
             UpdatePolygonCollider2D();
         }
     }
 
-    void UpdateTiles() {
+    private IEnumerator UpdateTiles() {
         int positionX = roomColumn * roomWidth;
         int positionY = roomRow * roomHeight;
         
@@ -65,6 +66,10 @@ public class GeneratedRoom : MonoBehaviour
                 }
             }
         }
+
+        yield return new WaitForEndOfFrame(); // need this!
+ 
+        LevelGenerator.GetGroundTileMap().GetComponent<CompositeCollider2D>().GenerateGeometry();
     }
     
     TileBase getTileFromFolder(int x, int y, string type) {
@@ -128,6 +133,7 @@ public class GeneratedRoom : MonoBehaviour
 
     void UpdatePolygonCollider2D() {
         //Only does a single room. Does not merge multiple rooms
+        //polyCollider = transform.Find("CM vcam").GetComponent<PolygonCollider2D>();
         polyCollider = GetComponent<PolygonCollider2D>();
 
         float positionX = 0.5f;

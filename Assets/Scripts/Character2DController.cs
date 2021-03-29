@@ -16,6 +16,9 @@ public class Character2DController : MonoBehaviour
 
     float blockInputTime = 0;
 
+    float movement;
+    bool jump = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,20 +28,28 @@ public class Character2DController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        movement = Input.GetAxis("Horizontal"); //left and right controll
+        if(!jump && Mathf.Abs(rb.velocity.y) < 0.001f) {
+            jump = Input.GetButtonDown("Jump");
+        }    
+    }
+
+    void FixedUpdate()
+    {
         Move();
     }
 
     void Move() {
         if(canMove) {
-            var movement = Input.GetAxis("Horizontal"); //left and right controll
             rb.velocity = new Vector2 (movement * MovementSpeed, rb.velocity.y);
 
             if(!Mathf.Approximately(0, movement)) { // Flip direction
                 transform.rotation = movement < 0 ? Quaternion.Euler(0, 180, 0) : Quaternion.identity;
             }
 
-            if(Input.GetButtonDown("Jump") && Mathf.Abs(rb.velocity.y) < 0.001f) { // jump controll
+            if(jump && Mathf.Abs(rb.velocity.y) < 0.001f) { // jump controll
                 rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                jump = false;
             }
             animator.SetFloat("XMovement", Mathf.Abs(movement));
         }
