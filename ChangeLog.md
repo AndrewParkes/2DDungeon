@@ -1,5 +1,7 @@
 # 2DDungeon Change Log:
 
+2021/03/29 - Dynamic Cinemachine camera follow with room bounds. Smoothed player movement. Composite collider.
+![GIF](https://i.imgur.com/2sx5gwK.gif)
 2021/03/28 - Refactored the level generation and added ground texturing based on the surroundings
 ![GIF](https://i.imgur.com/CT4XYhr.gif)
 2021/03/26 - Playing around with world generation
