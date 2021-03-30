@@ -13,7 +13,7 @@ public class Vcam : MonoBehaviour
 
             //How can I make it that I do not have to initialize the player at runtime?
             virtualCam.GetComponent<CinemachineVirtualCamera>().Follow = other.transform;
-            virtualCam.GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = 3f;
+            //virtualCam.GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = 3f;
         }
     }
 
