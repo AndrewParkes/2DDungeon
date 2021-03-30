@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Medieval_tiles_free2_157
+  m_Name: Medieval_tiles_free2_157_3
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300314, guid: 8b5b1c17003f5444fbcaecc0ffa7e6dc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

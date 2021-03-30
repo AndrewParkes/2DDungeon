@@ -157,6 +157,10 @@ PrefabInstance:
       propertyPath: m_StandbyUpdate
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5723398381053733681, guid: ffe18f2fe0cd9c34ea8169598b6a7898, type: 3}
+      propertyPath: m_Lens.OrthographicSize
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7670109937659098154, guid: ffe18f2fe0cd9c34ea8169598b6a7898, type: 3}
       propertyPath: m_BiasY
       value: 0
