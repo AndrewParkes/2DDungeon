@@ -6,6 +6,9 @@ using UnityEngine.Tilemaps;
 public class GeneratedRoom : MonoBehaviour
 {
 
+    [SerializeField]
+    GameObject resourceCache;
+
     public int roomWidth{ get; set; }
     public int roomHeight{ get; set; }
 
@@ -47,13 +50,13 @@ public class GeneratedRoom : MonoBehaviour
                     }
                 }
             }
-            //UpdateTiles();
-            StartCoroutine(UpdateTiles());
+            UpdateGroundTiles();
+            UpdateBackGroundTiles();
             UpdatePolygonCollider2D();
         }
     }
 
-    private IEnumerator UpdateTiles() {
+    private void UpdateGroundTiles() {
         int positionX = roomColumn * roomWidth;
         int positionY = roomRow * roomHeight;
         
@@ -62,38 +65,43 @@ public class GeneratedRoom : MonoBehaviour
                 int adjustedX = positionX + column;
                 int adjustedY = positionY + row;
                 if(roomLayout[column, row] == 1){
-                    LevelGenerator.GetGroundTileMap().SetTile(new Vector3Int(adjustedX, adjustedY, 0), getTileFromFolder(column, row, "Ground"));
+                    LevelGenerator.GetGroundTileMap().SetTile(new Vector3Int(adjustedX, adjustedY, 0), GetTileFromFolder("Tiles/Ground/" + GetCoveringGround(column, row)));
                 }
             }
         }
+    }
 
-        yield return new WaitForEndOfFrame(); // need this!
- 
-        LevelGenerator.GetGroundTileMap().GetComponent<CompositeCollider2D>().GenerateGeometry();
+    private void UpdateBackGroundTiles() {
+        int positionX = roomColumn * roomWidth;
+        int positionY = roomRow * roomHeight;
+        
+        for(int row = 0; row < roomHeight; row++) {
+            for(int column = 0; column < roomWidth; column++) {
+                int adjustedX = positionX + column;
+                int adjustedY = positionY + row;
+                if(roomLayout[column, row] == 0){
+                    LevelGenerator.GetBackgroundTileMap().SetTile(new Vector3Int(adjustedX, adjustedY, 0), GetTileFromFolder("Tiles/Background/" + GetCoveringBackGround(column, row)));
+                }
+            }
+        }
     }
     
-    TileBase getTileFromFolder(int x, int y, string type) {
-        
-        string covering = GetCovering(x, y);
-        Object[] tileBases = Resources.LoadAll("Tiles/" + type + "/" + covering, typeof(TileBase));
-        if(tileBases.Length == 0) {
-            return (TileBase)Resources.LoadAll("Tiles/Unknown", typeof(TileBase))[0];
-        }
-        return (TileBase)tileBases[Random.Range(0, tileBases.Length)];
+    TileBase GetTileFromFolder(string type) {
+        return resourceCache.GetComponent<ResourceCache>().GetTileFromFolder(type);
     }
 
-    string GetCovering(int x, int y) {
+    string GetCoveringGround(int x, int y) {
         string covering = "";
-        if(y + 1 < roomHeight -1 && roomLayout[x, y + 1] == 0) {
+        if(roomLayoutCheckUp(x, y, 0)) {
             covering = covering + "T";
         }
-        if(y - 1 >= 0 && roomLayout[x, y - 1] == 0) {
+        if(roomLayoutCheckDown(x, y, 0)) {
             covering = covering + "B";
         }
-        if(x - 1 >= 0 && roomLayout[x - 1, y] == 0) {
+        if(roomLayoutCheckLeft(x, y, 0)) {
             covering = covering + "L";
         }
-        if(x + 1 < roomWidth -1 && roomLayout[x + 1, y] == 0){
+        if(roomLayoutCheckRight(x, y, 0)){
             covering = covering + "R";
         }
 
@@ -102,6 +110,44 @@ public class GeneratedRoom : MonoBehaviour
         }
         return covering;
 
+    }
+
+    string GetCoveringBackGround(int x, int y) {
+        string covering = "";
+        if(roomLayoutCheckUp(x, y, 1)) {
+            covering = covering + "T";
+        }
+        if(roomLayoutCheckDown(x, y, 1)) {
+            covering = covering + "B";
+        }
+        if(roomLayoutCheckLeft(x, y, 1)) {
+            covering = covering + "L";
+        }
+        if(roomLayoutCheckRight(x, y, 1)){
+            covering = covering + "R";
+        }
+
+        if(covering == "" || covering == "LR" || covering == "TB" ) {
+            return "Center";
+        }
+        return covering;
+
+    }
+
+    bool roomLayoutCheckUp(int x, int y, int roomType) {
+        return (y + 1 < roomHeight && roomLayout[x, y + 1] == roomType);
+    }
+    
+    bool roomLayoutCheckDown(int x, int y, int roomType) {
+        return (y - 1 >= 0 && roomLayout[x, y - 1] == roomType);
+    }
+    
+    bool roomLayoutCheckLeft(int x, int y, int roomType) {
+        return (x - 1 >= 0 && roomLayout[x - 1, y] == roomType);
+    }
+    
+    bool roomLayoutCheckRight(int x, int y, int roomType) {
+        return (x + 1 < roomWidth && roomLayout[x + 1, y] == roomType);
     }
 
     bool IsBorder(int column, int row) {

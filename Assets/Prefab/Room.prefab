@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ad3ec639037124da445e3b08541277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourceCache: {fileID: 4920697602586679470, guid: ee7b55f180b831d4aac57bc02cd91bb3, type: 3}
 --- !u!60 &-8848505786227325525
 PolygonCollider2D:
   m_ObjectHideFlags: 0

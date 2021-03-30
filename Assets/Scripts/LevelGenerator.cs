@@ -9,21 +9,7 @@ public class LevelGenerator : MonoBehaviour
     Grid worldGrid;
 
     Tilemap ground;
-
-    [SerializeField]
-    TileBase[] groundTiles;
-    [SerializeField]
-    TileBase[] groundT;
-    [SerializeField]
-    TileBase[] groundB;
-    [SerializeField]
-    TileBase[] groundL;
-    [SerializeField]
-    TileBase[] groundR;
-    [SerializeField]
-    TileBase[] groundTB;
-    [SerializeField]
-    TileBase[] groundTL;
+    Tilemap background;
     
     [SerializeField]
     int rows;
@@ -43,6 +29,7 @@ public class LevelGenerator : MonoBehaviour
     void Start()
     {
         ground = GameObject.Find("Ground").GetComponent<Tilemap>();
+        background = GameObject.Find("Background").GetComponent<Tilemap>();
 
         GenerateRoomObjects();
         GeneratePath();
@@ -135,7 +122,7 @@ public class LevelGenerator : MonoBehaviour
         return ground;
     }
 
-    public TileBase GetGroundTile(int pos) {
-        return groundTiles[pos];
+    public Tilemap GetBackgroundTileMap() {
+        return background;
     }
 }
