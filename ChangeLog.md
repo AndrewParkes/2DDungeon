@@ -1,6 +1,6 @@
 # 2DDungeon Change Log:
 
-2021/03/30 - Added background tiling and caching tile. Finally a little refactoring and removing unused code.
+2021/03/30 - Added background tiling and caching tiles. A little refactoring and removing unused code.
 ![GIF](https://i.imgur.com/dzhpTjP.gif)
 2021/03/29 - Dynamic Cinemachine camera follow with room bounds. Smoothed player movement. Composite collider.
 ![GIF](https://i.imgur.com/2sx5gwK.gif)
