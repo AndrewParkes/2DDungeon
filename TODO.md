@@ -13,8 +13,8 @@ Add attack sprite and animation
 Animate enemies
 * Currently they only have a single sprite
 
-Player Jumping
-* Jump while holding space. Allow for small/ large jumps based on the length jump is held
+~~Player Jumping~~
+* ~~Jump while holding space. Allow for small/ large jumps based on the length jump is held~~
 
 ~~Rework tile lookup/caching~~
 * ~~Try something like a map (C# Dictionary) to store previously looked up tiles~~
