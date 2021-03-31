@@ -1,29 +1,21 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HealthUI : MonoBehaviour
 {
 
-    [SerializeField]
-    GameObject healthEmpty;
-    [SerializeField]
-    GameObject healthHalf;
-    [SerializeField]
-    GameObject healthFull;
-    [SerializeField]
-    float spriteSpacing = 100f;
+    [SerializeField] private GameObject healthEmpty;
+    [SerializeField] private GameObject healthHalf;
+    [SerializeField] private GameObject healthFull;
+    [SerializeField] private float spriteSpacing = 100f;
 
-    [SerializeField]
-    GameObject player;
-    PlayerBase playerBase;
+    [SerializeField] private GameObject player;
+    private PlayerBase playerBase;
 
     private List<GameObject> livesImages = new List<GameObject>();
 
-    void Start()
+    private void Start()
     {
-
         playerBase = player.GetComponent<PlayerBase>();
         UpdateHearts(playerBase.GetHealthMax(), playerBase.GetHealth());
     }
@@ -48,7 +40,7 @@ public class HealthUI : MonoBehaviour
         }
     }
 
-    void ClearHearts() {
+    private void ClearHearts() {
         foreach(GameObject livesImage in livesImages) {
             Destroy(livesImage);
         }

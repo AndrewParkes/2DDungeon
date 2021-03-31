@@ -6,8 +6,8 @@ public class PlayerWeapon : MonoBehaviour
 {
 
     public List<GameObject> childWeapons;
-         
-    void Start()
+
+    private void Start()
     {
         foreach (Transform child in transform)
         {

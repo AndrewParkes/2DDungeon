@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class PlayerDamaged : MonoBehaviour
 {
+    private PlayerBase playerBase;
+    private Rigidbody2D rb;
+    private Character2DController characterController;
 
-    PlayerBase PlayerBase;
-    Rigidbody2D rb;
-    Character2DController characterController;
-
-    void Start() {
-        PlayerBase = GetComponent<PlayerBase>();
+    private void Start() {
+        playerBase = GetComponent<PlayerBase>();
         rb = GetComponent<Rigidbody2D>();
         characterController = GetComponent<Character2DController>();
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if(collision.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = collision.gameObject.transform.GetComponent<Enemy>();
             
-            if (enemy != null)
+            if(enemy != null)
             {
                 Damage(enemy.GetContactDamage());
                 KnockBack(rb.transform.position - enemy.transform.position, enemy.GetKnockBackForce());
@@ -29,12 +28,12 @@ public class PlayerDamaged : MonoBehaviour
         }
     }
 
-    void Damage(float damage) {
-        PlayerBase.UpdateHealth(-1 * damage);
+    private void Damage(float damage) {
+        playerBase.UpdateHealth(-1 * damage);
     }
 
-    void KnockBack(Vector3 knockBackDirection, float force) {
-        characterController.BlockMoveMentForKnockBack(force);
+    private void KnockBack(Vector3 knockBackDirection, float force) {
+        characterController.BlockMovementForKnockBack(force);
         rb.velocity = Vector3.zero;
         rb.angularVelocity = 0f; 
         rb.AddForce( knockBackDirection.normalized * force, ForceMode2D.Impulse);

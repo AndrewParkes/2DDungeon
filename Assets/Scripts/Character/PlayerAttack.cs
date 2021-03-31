@@ -7,7 +7,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     private PlayerWeapon weapon;
 
-    void Update() {
+    private void Update() {
         CheckForAttack();
     }
 
@@ -24,7 +24,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    public void AttackInDirection(Vector2 direction) {
+    private void AttackInDirection(Vector2 direction) {
         weapon.Attack(direction);
     }
 }

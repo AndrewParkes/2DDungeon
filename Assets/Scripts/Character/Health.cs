@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
 
-    [SerializeField]
-    private float health = 120f;
+    [SerializeField] private float health = 120f;
 
     public void DealDamage(float damage) {
         health -= damage;

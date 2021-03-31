@@ -5,9 +5,9 @@ using UnityEngine.Tilemaps;
 
 public class ResourceCache : MonoBehaviour
 {
-    Dictionary <string, Object[]> resourceCache = new Dictionary<string, Object[]>();
+    private Dictionary <string, Object[]> resourceCache = new Dictionary<string, Object[]>();
 
-    string unknown = "Tiles/Unknown";
+    private const string Unknown = "Tiles/Unknown";
 
     public TileBase GetTileFromFolder(string type) {
         
@@ -17,7 +17,7 @@ public class ResourceCache : MonoBehaviour
 
         Object[] tileBases = Resources.LoadAll(type, typeof(TileBase));
         if(tileBases.Length == 0) {
-            return GetTileFromFolder(unknown);
+            return GetTileFromFolder(Unknown);
         }
         resourceCache.Add(type, tileBases);
         return (TileBase)resourceCache[type][Random.Range(0, resourceCache[type].Length)];

@@ -4,34 +4,28 @@ using UnityEngine;
 
 public class EnemyWalkerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private float jumpTiming = 5f;
-    Enemy enemy;
-    [SerializeField]
-    LayerMask groundLayer;
-    [SerializeField]
-    LayerMask enemyLayer;
+    [SerializeField] private float jumpTiming = 5f;
+    private Enemy enemy;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask enemyLayer;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         enemy = transform.GetComponent<Enemy>() as Enemy; 
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         
         Move();
     }
 
-    void Move() {
-        //transform.position += new Vector3(enemy.GetMovementDirection(), 0, 0) * Time.deltaTime * enemy.GetMovementSpeed();
+    private void Move() {
         enemy.GetRigidBody().velocity = new Vector2 (enemy.GetMovementDirection() * enemy.GetMovementSpeed(), enemy.GetRigidBody().velocity.y);
         CheckForTurnAround();
     }
 
-    void CheckForTurnAround() {
+    private void CheckForTurnAround() {
         
         
         if ( Physics2D.Raycast(new Vector2(transform.position.x + 0.4f * enemy.GetMovementDirection(), transform.position.y), Vector2.right * enemy.GetMovementDirection(), 0.1f, enemyLayer) || // enemy infront

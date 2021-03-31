@@ -1,49 +1,46 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Character2DController : MonoBehaviour
 {
-    [SerializeField]
-    private float MovementSpeed = 5;
+    [SerializeField] private float movementSpeed = 5;
     
-    [SerializeField]
-    private float jumpForce = 8f;
+    [SerializeField] private float jumpForce = 8f;
 
-    [SerializeField]
-    private float counterJumpForce = 16f;
+    [SerializeField] private float counterJumpForce = 16f;
 
     private Vector2 counterJump;
 
     private Rigidbody2D rb;
     public Animator animator;
-    bool canMove = true;
+    private bool canMove = true;
 
-    float blockInputTime = 0;
+    private float blockInputTime;
 
-    float movement;
-    bool jumpKeyHeld = false;
-    bool isJumping = false;
+    private float movement;
+    private bool jumpKeyHeld;
+    private bool isJumping;
+    private static readonly int XMovement = Animator.StringToHash("XMovement");
+    private static readonly int YMovement = Animator.StringToHash("YMovement");
+    private static readonly int Hit = Animator.StringToHash("Hit");
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         counterJump = Vector2.down * counterJumpForce * rb.mass;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        movement = Input.GetAxis("Horizontal"); //left and right controll) {
-        //jump = Input.GetButtonDown("Jump");   
+        movement = Input.GetAxis("Horizontal"); //left and right control
+           
         if(Input.GetButtonDown("Jump"))
         {
             jumpKeyHeld = true;
             if(Mathf.Abs(rb.velocity.y) < 0.001f)
             {
                 isJumping = true;
-                rb.AddForce(Vector2.up * jumpForce * rb.mass, ForceMode2D.Impulse);
+                rb.AddForce(Vector2.up * (jumpForce * rb.mass), ForceMode2D.Impulse);
             }
         }
         else if(Input.GetButtonUp("Jump"))
@@ -52,27 +49,18 @@ public class Character2DController : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         Move();
     }
 
-    void Move() {
+    private void Move() {
         if(canMove) {
-            rb.velocity = new Vector2 (movement * MovementSpeed, rb.velocity.y);
+            rb.velocity = new Vector2 (movement * movementSpeed, rb.velocity.y);
 
             if(!Mathf.Approximately(0, movement)) { // Flip direction
                 transform.rotation = movement < 0 ? Quaternion.Euler(0, 180, 0) : Quaternion.identity;
             }
-
-            /*if(jump && Mathf.Abs(rb.velocity.y) < 0.001f) { // jump controll
-            Debug.Log("Jump");
-                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-            } else if (!jump && Mathf.Abs(rb.velocity.y) > 0.001f) {
-                Vector3 dampeningDirection = rb.velocity.normalized * -1.0f;
-                rb.AddForce( dampeningDirection * dampeningRate);
-                Debug.Log("Reduce Jump");
-            }*/
 
             if(isJumping)
             {
@@ -82,21 +70,21 @@ public class Character2DController : MonoBehaviour
                 }
             }
 
-            animator.SetFloat("XMovement", Mathf.Abs(movement));
+            animator.SetFloat(XMovement, Mathf.Abs(movement));
         }
-        animator.SetFloat("YMovement", rb.velocity.y);
+        animator.SetFloat(YMovement, rb.velocity.y);
     }
 
-    public void BlockMoveMentForKnockBack(float force) {
+    public void BlockMovementForKnockBack(float force) {
         blockInputTime = force/10;
         StartCoroutine(BlockInputCoroutine());
     }
 
-    IEnumerator BlockInputCoroutine() {
+    private IEnumerator BlockInputCoroutine() {
         canMove = false;
-        animator.SetBool("Hit", true);
+        animator.SetBool(Hit, true);
         yield return new WaitForSeconds(blockInputTime);
-        animator.SetBool("Hit", false);
+        animator.SetBool(Hit, false);
         canMove = true;
     }
 }

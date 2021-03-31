@@ -5,45 +5,29 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    [SerializeField]
-    float contactDamage = 1f;
-    [SerializeField]
-    float attackDamage = 20f;
-    [SerializeField]
-    private float movementSpeed = 4f;
-    [SerializeField]
-    private float movementDirection = 1f;
-    [SerializeField]
-    private float jumpForce = 7f;
-    [SerializeField]
-    private float knockBackForce = 3f;
-    [SerializeField]
-    GameObject player;
+    [SerializeField] private float contactDamage = 1f;
+    [SerializeField] private float attackDamage = 20f;
+    [SerializeField] private float movementSpeed = 4f;
+    [SerializeField] private float movementDirection = 1f;
+    [SerializeField] private float jumpForce = 7f;
+    [SerializeField] private float knockBackForce = 3f;
+    [SerializeField] private GameObject player;
 
-    Health health;
+    private Health health;
 
     private Rigidbody2D rb;
     public Animator animator;
     
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         health = GetComponent<Health>();
         health.SetHealth(100);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        /*animator.SetFloat("XMovement", Mathf.Abs(movementDirection));
-        animator.SetFloat("YMovement", rb.velocity.y);*/
-    }
-
-    void OnTriggerEnter2D(Collider2D collider)
-    {
-        if(collider.tag == "Projectile")
+        if(collider.CompareTag("Projectile"))
         {
             Projectile projectile = collider.transform.GetComponent<Projectile>();
             if (projectile != null)
@@ -54,18 +38,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Damage(float damage) {
+    private void Damage(float damage) {
         health.DealDamage(damage);
         CheckDead();
     }
 
-    void CheckDead() {
+    private void CheckDead() {
         if(health.GetHealth() < 0) {
             Destroy(gameObject);
         }
     }
 
-    void KnockBack(Vector3 knockBackDirection, float force) {
+    private void KnockBack(Vector3 knockBackDirection, float force) {
         rb.velocity = Vector3.zero;
         rb.angularVelocity = 0f; 
         rb.AddForce( knockBackDirection.normalized * force, ForceMode2D.Impulse);

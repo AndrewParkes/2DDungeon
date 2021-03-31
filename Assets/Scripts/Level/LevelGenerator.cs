@@ -5,28 +5,22 @@ using UnityEngine.Tilemaps;
 
 public class LevelGenerator : MonoBehaviour
 {
-    [SerializeField]
-    Grid worldGrid;
+    [SerializeField] private Grid worldGrid;
 
-    Tilemap ground;
-    Tilemap background;
+    private Tilemap ground;
+    private Tilemap background;
     
-    [SerializeField]
-    int rows;
-    [SerializeField]
-    int columns;
+    [SerializeField] private int rows;
+    [SerializeField] private int columns;
 
-    [SerializeField]
-    int roomWidth;
-    [SerializeField]
-    int roomHeight;
+    [SerializeField] private int roomWidth;
+    [SerializeField] private int roomHeight;
 
-    [SerializeField]
-    GameObject roomPrefab;
+    [SerializeField] private GameObject roomPrefab;
 
-    GameObject[,] generatedRooms;
+    private GameObject[,] generatedRooms;
 
-    void Start()
+    private void Start()
     {
         ground = GameObject.Find("Ground").GetComponent<Tilemap>();
         background = GameObject.Find("Background").GetComponent<Tilemap>();
@@ -36,7 +30,7 @@ public class LevelGenerator : MonoBehaviour
         Generate();
     }
 
-    void GenerateRoomObjects() {
+    private void GenerateRoomObjects() {
         generatedRooms = new GameObject[columns, rows];
         for(int row = 0; row < rows; row++) {
             for(int column = 0; column < columns; column++) {
@@ -47,14 +41,15 @@ public class LevelGenerator : MonoBehaviour
                 room.roomColumn = column;
                 room.roomHeight = roomHeight;
                 room.roomWidth = roomWidth;
-                room.LevelGenerator = this;
+                room.levelGenerator = this;
                 generatedRooms[column, row] = generatedRoomGameObject;
             }
         }
     }
 
-    void GeneratePath() {
-        int pathBuilders = 4;
+    private void GeneratePath()
+    {
+        const int pathBuilders = 4;
         for(int path = 0; path <= pathBuilders; path++) {
 
             int pathLength = Random.Range((rows + columns) / 4 * 3, (rows + columns));
@@ -106,7 +101,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    void Generate() {
+    private void Generate() {
         for(int row = 0; row < rows; row++) {
             for(int column = 0; column < columns; column++) {
                 generatedRooms[column, row].GetComponent<GeneratedRoom>().Generate();
@@ -114,7 +109,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    GeneratedRoom GetGeneratedRoom(int posX, int posY) {
+    private GeneratedRoom GetGeneratedRoom(int posX, int posY) {
         return generatedRooms[posX, posY].GetComponent<GeneratedRoom>();
     }
 

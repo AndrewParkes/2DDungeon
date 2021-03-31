@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
-    [SerializeField]
-    HealthUI healthUI;
+    [SerializeField] private HealthUI healthUI;
 
-    float healthMax = 120f;
-    float health = 120f;
+    private float healthMax = 120f;
+    private float health = 120f;
 
     public float GetHealth() {
         return health;

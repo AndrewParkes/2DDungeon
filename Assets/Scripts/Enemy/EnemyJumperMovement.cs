@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class EnemyJumperMovement : MonoBehaviour
 {
-    [SerializeField]
-    private float jumpTiming = 5f;
-    Enemy enemy;
+    [SerializeField] private float jumpTiming = 5f;
+    private Enemy enemy;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         enemy = transform.GetComponent<Enemy>() as Enemy; 
-        StartCoroutine("RandomizedJump");
+        StartCoroutine(nameof(RandomizedJump));
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
         Move();
     }
      
@@ -33,7 +29,7 @@ public class EnemyJumperMovement : MonoBehaviour
     
     }
 
-    void Jump() {
+    private void Jump() {
 
         if(!Mathf.Approximately(0, enemy.GetMovementDirection())) {
             transform.rotation = enemy.GetMovementDirection() < 0 ? Quaternion.Euler(0, 180, 0) : Quaternion.identity;
@@ -44,7 +40,7 @@ public class EnemyJumperMovement : MonoBehaviour
         }
     }
 
-    void Move() {
+    private void Move() {
         if(Mathf.Abs(enemy.GetRigidBody().velocity.y) > 0.001f) {
             enemy.GetRigidBody().velocity = new Vector2 (enemy.GetMovementDirection() * enemy.GetMovementSpeed(), enemy.GetRigidBody().velocity.y);
         }

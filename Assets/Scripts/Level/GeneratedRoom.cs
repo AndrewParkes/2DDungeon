@@ -6,8 +6,7 @@ using UnityEngine.Tilemaps;
 public class GeneratedRoom : MonoBehaviour
 {
 
-    [SerializeField]
-    GameObject resourceCache;
+    [SerializeField] private GameObject resourceCache;
 
     public int roomWidth{ get; set; }
     public int roomHeight{ get; set; }
@@ -23,64 +22,64 @@ public class GeneratedRoom : MonoBehaviour
     public bool pathRight { get; set; } = false;
 
     public int roomType{ get; set; } // start, boss, item, lever
-    
-    int[,] roomLayout;
 
-    public LevelGenerator LevelGenerator { get; set; }
+    private int[,] roomLayout;
 
-    PolygonCollider2D polyCollider;
+    public LevelGenerator levelGenerator { get; set; }
 
-    void Start()
+    private PolygonCollider2D polyCollider;
+
+    public void Generate()
     {
-    }
-
-    public void Generate() {
-        if(roomActive) {
-            roomLayout = new int[roomWidth, roomHeight];
-            for(int row = 0; row < roomHeight; row++) {
-                for(int column = 0; column < roomWidth; column++) {
-                    if(IsBorder(column, row) && !IsLevelTransitionGap(column, row)) {
-                        roomLayout[column, row] = 1;
-                    }
-                    else if(roomType == 1 && Center(column, row)) {
-                        roomLayout[column, row] = 1;
-                    }
-                    else {
-                        roomLayout[column, row] = 0;
-                    }
+        if (!roomActive)
+        {
+            return;
+        }
+        
+        roomLayout = new int[roomWidth, roomHeight];
+        for(var row = 0; row < roomHeight; row++) {
+            for(var column = 0; column < roomWidth; column++) {
+                if(IsBorder(column, row) && !IsLevelTransitionGap(column, row)) {
+                    roomLayout[column, row] = 1;
+                }
+                else if(roomType == 1 && Center(column, row)) {
+                    roomLayout[column, row] = 1;
+                }
+                else {
+                    roomLayout[column, row] = 0;
                 }
             }
-            UpdateGroundTiles();
-            UpdateBackGroundTiles();
-            UpdatePolygonCollider2D();
         }
+        UpdateGroundTiles();
+        UpdateBackGroundTiles();
+        UpdatePolygonCollider2D();
     }
 
     private void UpdateGroundTiles() {
-        int positionX = roomColumn * roomWidth;
-        int positionY = roomRow * roomHeight;
+        var positionX = roomColumn * roomWidth;
+        var positionY = roomRow * roomHeight;
         
-        for(int row = 0; row < roomHeight; row++) {
-            for(int column = 0; column < roomWidth; column++) {
-                int adjustedX = positionX + column;
-                int adjustedY = positionY + row;
+        for(var row = 0; row < roomHeight; row++) {
+            for(var column = 0; column < roomWidth; column++) {
+                var adjustedX = positionX + column;
+                var adjustedY = positionY + row;
                 if(roomLayout[column, row] == 1){
-                    LevelGenerator.GetGroundTileMap().SetTile(new Vector3Int(adjustedX, adjustedY, 0), GetTileFromFolder("Tiles/Ground/" + GetCoveringGround(column, row)));
+                    levelGenerator.GetGroundTileMap().SetTile(new Vector3Int(adjustedX, adjustedY, 0), GetTileFromFolder("Tiles/Ground/" + GetCoveringGround(column, row)));
                 }
             }
         }
     }
 
     private void UpdateBackGroundTiles() {
-        int positionX = roomColumn * roomWidth;
-        int positionY = roomRow * roomHeight;
+        var positionX = roomColumn * roomWidth;
+        var positionY = roomRow * roomHeight;
         
-        for(int row = 0; row < roomHeight; row++) {
-            for(int column = 0; column < roomWidth; column++) {
-                int adjustedX = positionX + column;
-                int adjustedY = positionY + row;
+        for(var row = 0; row < roomHeight; row++) {
+            for(var column = 0; column < roomWidth; column++) {
+                var adjustedX = positionX + column;
+                var adjustedY = positionY + row;
                 if(roomLayout[column, row] == 0){
-                    LevelGenerator.GetBackgroundTileMap().SetTile(new Vector3Int(adjustedX, adjustedY, 0), GetTileFromFolder("Tiles/Background/" + GetCoveringBackGround(column, row)));
+                    levelGenerator.GetBackgroundTileMap().SetTile(new Vector3Int(adjustedX, adjustedY, 0), GetTileFromFolder("Tiles/Background/" + GetCoveringBackGround(column, row)));
                 }
             }
         }
@@ -90,41 +89,37 @@ public class GeneratedRoom : MonoBehaviour
         return resourceCache.GetComponent<ResourceCache>().GetTileFromFolder(type);
     }
 
-    string GetCoveringGround(int x, int y) {
-        string covering = "";
-        if(roomLayoutCheckUp(x, y, 0)) {
-            covering = covering + "T";
+    private string GetCoveringGround(int x, int y) {
+        var covering = "";
+        if(RoomLayoutCheckUp(x, y, 0)) {
+            covering += "T";
         }
-        if(roomLayoutCheckDown(x, y, 0)) {
-            covering = covering + "B";
+        if(RoomLayoutCheckDown(x, y, 0)) {
+            covering += "B";
         }
-        if(roomLayoutCheckLeft(x, y, 0)) {
-            covering = covering + "L";
+        if(RoomLayoutCheckLeft(x, y, 0)) {
+            covering += "L";
         }
-        if(roomLayoutCheckRight(x, y, 0)){
-            covering = covering + "R";
+        if(RoomLayoutCheckRight(x, y, 0)){
+            covering += "R";
         }
 
-        if(covering== "") {
-            return "Center";
-        }
-        return covering;
-
+        return covering== "" ? "Center" : covering;
     }
 
-    string GetCoveringBackGround(int x, int y) {
-        string covering = "";
-        if(roomLayoutCheckUp(x, y, 1)) {
-            covering = covering + "T";
+    private string GetCoveringBackGround(int x, int y) {
+        var covering = "";
+        if(RoomLayoutCheckUp(x, y, 1)) {
+            covering += "T";
         }
-        if(roomLayoutCheckDown(x, y, 1)) {
-            covering = covering + "B";
+        if(RoomLayoutCheckDown(x, y, 1)) {
+            covering += "B";
         }
-        if(roomLayoutCheckLeft(x, y, 1)) {
-            covering = covering + "L";
+        if(RoomLayoutCheckLeft(x, y, 1)) {
+            covering += "L";
         }
-        if(roomLayoutCheckRight(x, y, 1)){
-            covering = covering + "R";
+        if(RoomLayoutCheckRight(x, y, 1)){
+            covering += "R";
         }
 
         if(covering == "" || covering == "LR" || covering == "TB" ) {
@@ -134,41 +129,39 @@ public class GeneratedRoom : MonoBehaviour
 
     }
 
-    bool roomLayoutCheckUp(int x, int y, int roomType) {
-        return (y + 1 < roomHeight && roomLayout[x, y + 1] == roomType);
-    }
-    
-    bool roomLayoutCheckDown(int x, int y, int roomType) {
-        return (y - 1 >= 0 && roomLayout[x, y - 1] == roomType);
-    }
-    
-    bool roomLayoutCheckLeft(int x, int y, int roomType) {
-        return (x - 1 >= 0 && roomLayout[x - 1, y] == roomType);
-    }
-    
-    bool roomLayoutCheckRight(int x, int y, int roomType) {
-        return (x + 1 < roomWidth && roomLayout[x + 1, y] == roomType);
+    private bool RoomLayoutCheckUp(int x, int y, int tileType) {
+        return (y + 1 < roomHeight && roomLayout[x, y + 1] == tileType);
     }
 
-    bool IsBorder(int column, int row) {
+    private bool RoomLayoutCheckDown(int x, int y, int tileType) {
+        return (y - 1 >= 0 && roomLayout[x, y - 1] == tileType);
+    }
+
+    private bool RoomLayoutCheckLeft(int x, int y, int tileType) {
+        return (x - 1 >= 0 && roomLayout[x - 1, y] == tileType);
+    }
+
+    private bool RoomLayoutCheckRight(int x, int y, int tileType) {
+        return (x + 1 < roomWidth && roomLayout[x + 1, y] == tileType);
+    }
+
+    private bool IsBorder(int column, int row) {
         return (row == 0 || row == roomHeight -1 || column == 0 || column == roomWidth -1);
     }
 
-    bool IsLevelTransitionGap(int column, int row) {
-        if(IsBorder(column, row)) {
-        
-            if(pathUp && row == roomHeight - 1 && column == Mathf.Ceil(roomWidth / 2) - 1) {
-                return true;
-            }
-            if(pathDown && row == 0 && column == Mathf.Ceil(roomWidth / 2) - 1) {
-                return true;
-            }
-            if(pathLeft && row == Mathf.Ceil(roomHeight / 2) - 1 && column == 0) {
-                return true;
-            }
-            if(pathRight && row == Mathf.Ceil(roomHeight / 2) - 1 && column == roomWidth - 1 ) {
-                return true;
-            }
+    private bool IsLevelTransitionGap(int column, int row) {
+        if (!IsBorder(column, row)) return false;
+        if(pathUp && row == roomHeight - 1 && column == Mathf.Ceil(roomWidth / 2) - 1) {
+            return true;
+        }
+        if(pathDown && row == 0 && column == Mathf.Ceil(roomWidth / 2) - 1) {
+            return true;
+        }
+        if(pathLeft && row == Mathf.Ceil(roomHeight / 2) - 1 && column == 0) {
+            return true;
+        }
+        if(pathRight && row == Mathf.Ceil(roomHeight / 2) - 1 && column == roomWidth - 1 ) {
+            return true;
         }
         return false;
     }
@@ -182,8 +175,8 @@ public class GeneratedRoom : MonoBehaviour
         //polyCollider = transform.Find("CM vcam").GetComponent<PolygonCollider2D>();
         polyCollider = GetComponent<PolygonCollider2D>();
 
-        float positionX = 0.5f;
-        float positionY = 0.5f;
+        const float positionX = 0.5f;
+        const float positionY = 0.5f;
 
         Vector2 point1 = new Vector2(positionX, positionY);
         Vector2 point2 = new Vector2(positionX, positionY + roomHeight);
