@@ -1,9 +1,5 @@
 # 2DDungeon TODO:
 
-~~Rework tile lookup/caching
-* Try something like a map (C# Dictionary) to store previously looked up tiles
-* First check for tiles in map if doesnt exist lookup from resources~~
-
 Disable rooms that are not active (Character is not in the room)
 * When transitioning in and out of room deactivate rooms outside of view activate current room
 
@@ -19,3 +15,7 @@ Animate enemies
 
 Player Jumping
 * Jump while holding space. Allow for small/ large jumps based on the length jump is held
+
+~~Rework tile lookup/caching~~
+* ~~Try something like a map (C# Dictionary) to store previously looked up tiles~~
+* ~~First check for tiles in map if doesnt exist lookup from resources~~
