@@ -1,5 +1,7 @@
 # 2DDungeon Change Log:
 
+2021/03/31 - Added jump height variety when holding jump. Some refactoring
+![GIF](https://i.imgur.com/ux3Miwu.gif)
 2021/03/30 - Added background tiling and caching tiles. A little refactoring and removing unused code.
 ![GIF](https://i.imgur.com/dzhpTjP.gif)
 2021/03/29 - Dynamic Cinemachine camera follow with room bounds. Smoothed player movement. Composite collider.
